@@ -1,0 +1,29 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": ".NET Launch Web API",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build",
+      "program": "${workspaceFolder}\\src\\QuizMaster.API\\bin\\Debug\\net9.0\\QuizMaster.API.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://localhost:5079;https://localhost:7005"
+      },
+      "envFile": "${workspaceFolder}/.vscode/.env"
+    },
+    {
+      "name": ".NET Attach",
+      "type": "coreclr",
+      "request": "attach"
+    }
+  ]
+}
