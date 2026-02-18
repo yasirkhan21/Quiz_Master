@@ -74,7 +74,7 @@ dotnet ef database update --project src/QuizMaster.Infrastructure --startup-proj
 dotnet run --project src/QuizMaster.API
 ```
 
-API will be available at: `https://localhost:7005`
+API will be available at: `https://localhost:5079`
 
 ### 3. Frontend Setup
 ```bash
