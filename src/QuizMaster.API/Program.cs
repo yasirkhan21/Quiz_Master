@@ -32,7 +32,18 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new() { Title = "QuizMaster API", Version = "v1" });
+    c.SwaggerDoc("v1", new()
+    {
+        Title = "QuizMaster API",
+        Version = "v1",
+        Description = "A comprehensive quiz application with intelligent recommendations and adaptive scoring",
+        Contact = new()
+        {
+            Name = "QuizMaster Team",
+            Email = "support@quizmaster.com"
+        }
+    });
+
     c.AddSecurityDefinition("Bearer", new()
     {
         Name = "Authorization",
@@ -40,19 +51,32 @@ builder.Services.AddSwaggerGen(c =>
         Scheme = "bearer",
         BearerFormat = "JWT",
         In = Microsoft.OpenApi.Models.ParameterLocation.Header,
-        Description = "Enter your JWT token"
+        Description = "Enter your JWT token in format: Bearer {token}"
     });
+
     c.AddSecurityRequirement(new()
     {
         {
-            new() { Reference = new() { 
-                Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme, 
-                Id = "Bearer" } },
+            new()
+            {
+                Reference = new()
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
             Array.Empty<string>()
         }
     });
-});
 
+    // Include XML comments
+    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+    {
+        c.IncludeXmlComments(xmlPath);
+    }
+});
 // Database
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 if (string.IsNullOrEmpty(connectionString))
@@ -153,3 +177,5 @@ using (var scope = app.Services.CreateScope())
 }
 
 app.Run();
+// Make Program class accessible to integration tests
+public partial class Program { }
